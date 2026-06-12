@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Studio | Decision Science Corp</title>
+    <meta name="description" content="Generate QR codes for any URL, email, or phone number. Catches common typos before you print stickers.">
+    <meta name="theme-color" content="#0a0a0a">
+
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    <link rel="stylesheet" href="fonts/inter.css">
+    <link rel="stylesheet" href="styles.css">
+
+    <meta property="og:title" content="QR Code Studio">
+    <meta property="og:description" content="Turn any URL, email, or phone number into a scannable QR code.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://qr.decisionsciencecorp.com/">
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="https://decisionsciencecorp.com/" class="nav-logo" aria-label="Decision Science Corp">
+                <img src="assets/images/logo-white.svg" alt="" class="nav-logo-img" aria-hidden="true">
+                <span class="nav-logo-text">Decision Science Corp</span>
+            </a>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#studio" class="nav-link">Studio</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="https://decisionsciencecorp.com/" class="nav-link">Main Site</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero hero-compact" id="studio">
+        <div class="hero-container">
+            <div class="hero-content">
+                <p class="hero-eyebrow">QR Code Studio</p>
+                <h1 class="hero-title">Turn any link<br>into a scannable code.</h1>
+                <p class="hero-subtitle">
+                    Web addresses, email, phone numbers — pasted in, encoded clean.
+                    We catch the obvious typos before you print 500 stickers.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="studio-section">
+        <div class="container studio-grid">
+
+            <div class="studio-card studio-card--input">
+                <div class="studio-card__header">
+                    <h2 class="studio-card__title">What should the QR point to?</h2>
+                    <p class="studio-card__subtitle">Paste a URL, email, or phone number. Auto-detects the type.</p>
+                </div>
+
+                <div class="type-toggle" role="radiogroup" aria-label="QR content type">
+                    <button type="button" class="type-pill is-active" data-type="auto" role="radio" aria-checked="true">Auto</button>
+                    <button type="button" class="type-pill" data-type="url" role="radio" aria-checked="false">URL</button>
+                    <button type="button" class="type-pill" data-type="email" role="radio" aria-checked="false">Email</button>
+                    <button type="button" class="type-pill" data-type="tel" role="radio" aria-checked="false">Phone</button>
+                    <button type="button" class="type-pill" data-type="text" role="radio" aria-checked="false">Plain text</button>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="content">Content</label>
+                    <textarea id="content" class="form-textarea" rows="3"
+                        placeholder="example.com  ·  hello@decisionsciencecorp.com  ·  +1 555 010 0123"
+                        autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"></textarea>
+                </div>
+
+                <div class="suggestion-banner" id="suggestion-banner" hidden>
+                    <div class="suggestion-banner__icon" aria-hidden="true">
+                        <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor">
+                            <path d="M8 1.5a6.5 6.5 0 1 1 0 13 6.5 6.5 0 0 1 0-13Zm-.75 4.25v3.5h1.5v-3.5h-1.5Zm0 5v1.5h1.5v-1.5h-1.5Z"/>
+                        </svg>
+                    </div>
+                    <div class="suggestion-banner__body">
+                        <p class="suggestion-banner__lead" id="suggestion-text"></p>
+                        <div class="suggestion-banner__actions">
+                            <button type="button" class="btn btn-small btn-primary" id="suggestion-accept">Use suggestion</button>
+                            <button type="button" class="btn btn-small btn-secondary" id="suggestion-dismiss">Keep as typed</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="status-row" id="status-row">
+                    <span class="status-row__label">Encoded as</span>
+                    <code class="status-row__value" id="encoded-value">—</code>
+                </div>
+
+                <div class="error-row" id="error-row" hidden>
+                    <span id="error-text"></span>
+                </div>
+
+                <details class="advanced">
+                    <summary>Advanced</summary>
+                    <div class="advanced-grid">
+                        <label class="advanced-field">
+                            <span class="advanced-field__label">Error correction</span>
+                            <select id="ecl" class="form-input">
+                                <option value="L">L — 7% (smaller code)</option>
+                                <option value="M" selected>M — 15% (balanced)</option>
+                                <option value="Q">Q — 25%</option>
+                                <option value="H">H — 30% (most damage-tolerant)</option>
+                            </select>
+                        </label>
+                        <label class="advanced-field">
+                            <span class="advanced-field__label">Module size (px)</span>
+                            <input id="cell-size" class="form-input" type="number" min="2" max="20" step="1" value="8">
+                        </label>
+                        <label class="advanced-field">
+                            <span class="advanced-field__label">Quiet-zone margin</span>
+                            <input id="margin" class="form-input" type="number" min="0" max="16" step="1" value="4">
+                        </label>
+                    </div>
+                </details>
+            </div>
+
+            <div class="studio-card studio-card--preview">
+                <div class="studio-card__header">
+                    <h2 class="studio-card__title">Preview</h2>
+                    <p class="studio-card__subtitle" id="preview-meta">Type to generate.</p>
+                </div>
+
+                <div class="qr-stage" id="qr-stage" data-state="empty">
+                    <div class="qr-empty" id="qr-empty">
+                        <svg viewBox="0 0 64 64" width="64" height="64" aria-hidden="true">
+                            <g fill="currentColor" opacity="0.55">
+                                <rect x="4" y="4" width="20" height="20" rx="2"/>
+                                <rect x="40" y="4" width="20" height="20" rx="2"/>
+                                <rect x="4" y="40" width="20" height="20" rx="2"/>
+                            </g>
+                            <g fill="#0a0a0a">
+                                <rect x="9" y="9" width="10" height="10" rx="1"/>
+                                <rect x="45" y="9" width="10" height="10" rx="1"/>
+                                <rect x="9" y="45" width="10" height="10" rx="1"/>
+                            </g>
+                        </svg>
+                        <p>Your QR code will appear here.</p>
+                    </div>
+                    <canvas id="qr-canvas" hidden></canvas>
+                </div>
+
+                <div class="download-row">
+                    <button type="button" class="btn btn-primary" id="download-png" disabled>Download PNG</button>
+                    <button type="button" class="btn btn-secondary" id="download-svg" disabled>Download SVG</button>
+                </div>
+
+                <p class="preview-fineprint">
+                    Codes are generated entirely in your browser. Nothing you type is sent to our servers.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="info-section" id="about">
+        <div class="container info-grid">
+            <div class="info-card">
+                <div class="info-card__icon" aria-hidden="true">🧭</div>
+                <h3 class="info-card__title">Forgiving by design</h3>
+                <p class="info-card__body">
+                    Forget <code>https://</code>? We add it. Type <code>gnail.com</code>?
+                    We suggest <code>gmail.com</code>. The point of a QR code is that it
+                    works on the first scan — not after a reprint.
+                </p>
+            </div>
+            <div class="info-card">
+                <div class="info-card__icon" aria-hidden="true">🔒</div>
+                <h3 class="info-card__title">Local only</h3>
+                <p class="info-card__body">
+                    Generation happens in your browser. We don't log inputs and we don't
+                    proxy them through a third-party API.
+                </p>
+            </div>
+            <div class="info-card">
+                <div class="info-card__icon" aria-hidden="true">📎</div>
+                <h3 class="info-card__title">Print-ready outputs</h3>
+                <p class="info-card__body">
+                    Download as PNG for slides and stickers, or SVG for crisp scaling at
+                    any size — billboard or business card.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="https://decisionsciencecorp.com/" class="footer-brand-link">
+                        <img src="assets/images/logo-white.svg" alt="" class="footer-logo-img" aria-hidden="true">
+                        <span class="footer-brand-text">Decision Science Corp</span>
+                    </a>
+                </div>
+                <ul class="footer-list footer-list--inline">
+                    <li><a class="footer-link" href="https://decisionsciencecorp.com/">Main site</a></li>
+                    <li><a class="footer-link" href="https://decisionsciencecorp.com/#contact">Contact</a></li>
+                    <li><a class="footer-link" href="https://decisionsciencecorp.com/blog.php">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">
+                    QR engine: <a class="footer-link" href="https://github.com/kazuhikoarase/qrcode-generator">qrcode-generator</a> (MIT).
+                    &copy; <span id="year"></span> Decision Science Corp.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="vendor/qrcode.js"></script>
+    <script src="vendor/qrcode_UTF8.js"></script>
+    <script src="app.js" defer></script>
+</body>
+</html>

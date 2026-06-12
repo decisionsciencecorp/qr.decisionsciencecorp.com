@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <rect width="32" height="32" rx="6" fill="#0a0a0a"/>
+  <!-- QR-like finder squares + accent dot -->
+  <g fill="#fafafa">
+    <rect x="4" y="4" width="9" height="9" rx="1.5"/>
+    <rect x="19" y="4" width="9" height="9" rx="1.5"/>
+    <rect x="4" y="19" width="9" height="9" rx="1.5"/>
+  </g>
+  <g fill="#0a0a0a">
+    <rect x="6.5" y="6.5" width="4" height="4" rx="0.5"/>
+    <rect x="21.5" y="6.5" width="4" height="4" rx="0.5"/>
+    <rect x="6.5" y="21.5" width="4" height="4" rx="0.5"/>
+  </g>
+  <!-- accent grid bits -->
+  <g fill="#3b82f6">
+    <rect x="16" y="16" width="3" height="3"/>
+    <rect x="22" y="19" width="3" height="3"/>
+    <rect x="19" y="22" width="3" height="3"/>
+    <rect x="25" y="22" width="3" height="3"/>
+    <rect x="22" y="25" width="3" height="3"/>
+  </g>
+</svg>

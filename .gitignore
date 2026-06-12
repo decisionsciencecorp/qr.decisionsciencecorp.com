@@ -1,0 +1,31 @@
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+/logs/
+
+# Node (only used for Playwright design-smoke)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Python (Playwright)
+.venv/
+.pytest_cache/
+__pycache__/
+/tests/artifacts/
