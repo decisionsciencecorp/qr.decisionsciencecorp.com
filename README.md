@@ -23,9 +23,12 @@ public/                 docroot served by nginx (multihost pattern)
 └── vendor/
     ├── qrcode.js       MIT — kazuhikoarase/qrcode-generator
     └── qrcode_UTF8.js  MIT — UTF-8 string support helper
+db/                     empty placeholder (.gitkeep)
+                        — keeps multihost deploy.sh happy; this app has no DB
 ```
 
-No PHP, no database. The server only ships static files.
+No PHP, no database. The `db/` directory exists only so the multihost deploy
+pipeline (which assumes every site has one) has a valid rsync source.
 
 ## Deploy
 
