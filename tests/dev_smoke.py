@@ -28,7 +28,7 @@ def main() -> int:
 
             page.goto(BASE + "dev/index.php", wait_until="networkidle")
             assert "DEV" in page.inner_text("body")
-            assert page.locator('a[href*="path=agents"]').count() >= 1
+            assert page.locator('footer a[href*="path=agents"]').count() >= 1
             page.screenshot(path=str(ARTIFACTS / f"{label}-hub.png"), full_page=True)
 
             page.goto(BASE + "dev/docs.php?path=agents", wait_until="networkidle")
