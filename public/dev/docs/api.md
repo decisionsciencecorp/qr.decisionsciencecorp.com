@@ -118,8 +118,12 @@ When `logo_base64` is set, effective ECL is at least **Q**.
 
 ## SDKs
 
-- [PHP SDK](sdk-php) — `sdk/php/QrStudioClient.php`
-- [Python SDK](sdk-python) — `sdk/python/qr_studio/client.py`
+- [PHP SDK](sdk-php) — [`sdk/php` on GitHub](https://github.com/decisionsciencecorp/qr.decisionsciencecorp.com/tree/main/sdk/php)
+- [Python SDK](sdk-python) — [`sdk/python` on GitHub](https://github.com/decisionsciencecorp/qr.decisionsciencecorp.com/tree/main/sdk/python)
+
+## SMCP plugin
+
+- [SMCP docs](smcp) — [`smcp_plugin` on GitHub](https://github.com/decisionsciencecorp/qr.decisionsciencecorp.com/tree/main/smcp_plugin)
 
 ## Agents
 

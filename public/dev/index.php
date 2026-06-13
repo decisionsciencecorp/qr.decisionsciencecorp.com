@@ -70,7 +70,9 @@ $agentsRepoUrl = 'https://github.com/decisionsciencecorp/qr.decisionsciencecorp.
             </p>
             <ul class="dev-quicklinks">
                 <li><a href="docs.php?path=api">REST API</a> — <code>POST /api/v1/normalize.php</code>, <code>generate.php</code></li>
-                <li><a href="docs.php?path=smcp">SMCP plugin</a> — <code>smcp_plugin/qr_studio/cli.py --describe</code></li>
+                <li><a href="docs.php?path=smcp">SMCP plugin</a> — <a href="https://github.com/decisionsciencecorp/qr.decisionsciencecorp.com/tree/main/smcp_plugin">GitHub</a> · <code>cli.py --describe</code></li>
+                <li><a href="docs.php?path=sdk-php">PHP SDK</a> — <a href="https://github.com/decisionsciencecorp/qr.decisionsciencecorp.com/tree/main/sdk/php">GitHub</a></li>
+                <li><a href="docs.php?path=sdk-python">Python SDK</a> — <a href="https://github.com/decisionsciencecorp/qr.decisionsciencecorp.com/tree/main/sdk/python">GitHub</a></li>
                 <li><a href="<?= htmlspecialchars($openapiUrl, ENT_QUOTES) ?>">openapi.json</a> — machine-readable contract</li>
             </ul>
         </section>
@@ -91,6 +93,11 @@ $agentsRepoUrl = 'https://github.com/decisionsciencecorp/qr.decisionsciencecorp.
                 <a href="https://github.com/decisionsciencecorp/qr.decisionsciencecorp.com">github.com/decisionsciencecorp/qr.decisionsciencecorp.com</a>
                 — AGPL-3.0 code, CC BY-SA 4.0 documentation.
             </p>
+            <ul class="dev-quicklinks">
+                <li><a href="https://github.com/decisionsciencecorp/qr.decisionsciencecorp.com/tree/main/sdk/php">PHP SDK</a></li>
+                <li><a href="https://github.com/decisionsciencecorp/qr.decisionsciencecorp.com/tree/main/sdk/python">Python SDK</a></li>
+                <li><a href="https://github.com/decisionsciencecorp/qr.decisionsciencecorp.com/tree/main/smcp_plugin">SMCP plugin</a></li>
+            </ul>
         </section>
     </main>
 

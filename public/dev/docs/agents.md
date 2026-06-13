@@ -8,8 +8,8 @@ This page is the canonical **agent onboarding** guide for QR Code Studio. The sa
 |----------|------|-------|
 | 1 | **This guide** | `/dev/docs.php?path=agents` |
 | 2 | **REST API** | [API reference](api) · [OpenAPI JSON](/api/v1/openapi.json) |
-| 3 | **SMCP plugin** | [SMCP docs](smcp) · `smcp_plugin/qr_studio/cli.py --describe` |
-| 4 | **SDKs** | [PHP](sdk-php) · [Python](sdk-python) |
+| 3 | **SMCP plugin** | [SMCP docs](smcp) · [GitHub `smcp_plugin`](https://github.com/decisionsciencecorp/qr.decisionsciencecorp.com/tree/main/smcp_plugin) · `cli.py --describe` |
+| 4 | **SDKs** | [PHP](sdk-php) ([GitHub](https://github.com/decisionsciencecorp/qr.decisionsciencecorp.com/tree/main/sdk/php)) · [Python](sdk-python) ([GitHub](https://github.com/decisionsciencecorp/qr.decisionsciencecorp.com/tree/main/sdk/python)) |
 
 ## What agents should use
 
@@ -87,6 +87,8 @@ Run discovery:
 ```bash
 python3 smcp_plugin/qr_studio/cli.py --describe
 ```
+
+Source: [smcp_plugin on GitHub](https://github.com/decisionsciencecorp/qr.decisionsciencecorp.com/tree/main/smcp_plugin)
 
 ## Licensing for agents
 

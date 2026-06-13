@@ -15,9 +15,9 @@ Turn any URL, email, or phone number into a scannable QR code — in the browser
 | **DEV hub** | https://qr.decisionsciencecorp.com/dev/index.php |
 | **agents.md** | [`agents.md`](agents.md) · [live docs](https://qr.decisionsciencecorp.com/dev/docs.php?path=agents) |
 | **API** | `/api/v1/` · [OpenAPI](https://qr.decisionsciencecorp.com/api/v1/openapi.json) |
-| **PHP SDK** | `sdk/php/QrStudioClient.php` |
-| **Python SDK** | `sdk/python/` |
-| **SMCP plugin** | `smcp_plugin/qr_studio/cli.py --describe` |
+| **PHP SDK** | `sdk/php/QrStudioClient.php` — [GitHub](https://github.com/decisionsciencecorp/qr.decisionsciencecorp.com/tree/main/sdk/php) |
+| **Python SDK** | `sdk/python/` — [GitHub](https://github.com/decisionsciencecorp/qr.decisionsciencecorp.com/tree/main/sdk/python) |
+| **SMCP plugin** | `smcp_plugin/qr_studio/cli.py --describe` — [GitHub](https://github.com/decisionsciencecorp/qr.decisionsciencecorp.com/tree/main/smcp_plugin) |
 
 ---
 

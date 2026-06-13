@@ -1,6 +1,6 @@
 # PHP SDK
 
-Location: `sdk/php/QrStudioClient.php` (AGPL-3.0)
+**GitHub:** [sdk/php](https://github.com/decisionsciencecorp/qr.decisionsciencecorp.com/tree/main/sdk/php) · [`QrStudioClient.php`](https://github.com/decisionsciencecorp/qr.decisionsciencecorp.com/blob/main/sdk/php/QrStudioClient.php) (AGPL-3.0)
 
 ## Requirements
 
@@ -9,7 +9,7 @@ Location: `sdk/php/QrStudioClient.php` (AGPL-3.0)
 
 ## Install
 
-Copy `QrStudioClient.php` into your project or require from a git submodule.
+Copy [`QrStudioClient.php`](https://github.com/decisionsciencecorp/qr.decisionsciencecorp.com/blob/main/sdk/php/QrStudioClient.php) into your project, clone [sdk/php](https://github.com/decisionsciencecorp/qr.decisionsciencecorp.com/tree/main/sdk/php), or add the repo as a git submodule.
 
 ## Usage
 

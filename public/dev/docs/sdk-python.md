@@ -1,6 +1,6 @@
 # Python SDK
 
-Location: `sdk/python/qr_studio/` (AGPL-3.0)
+**GitHub:** [sdk/python](https://github.com/decisionsciencecorp/qr.decisionsciencecorp.com/tree/main/sdk/python) · [`qr_studio/client.py`](https://github.com/decisionsciencecorp/qr.decisionsciencecorp.com/blob/main/sdk/python/qr_studio/client.py) (AGPL-3.0)
 
 ## Requirements
 
@@ -8,6 +8,8 @@ Location: `sdk/python/qr_studio/` (AGPL-3.0)
 - Standard library only (`urllib`)
 
 ## Install
+
+From a clone of [sdk/python](https://github.com/decisionsciencecorp/qr.decisionsciencecorp.com/tree/main/sdk/python):
 
 ```bash
 pip install -e sdk/python

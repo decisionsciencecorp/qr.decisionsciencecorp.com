@@ -9,9 +9,9 @@ QR Code Studio is an open-source QR generator from Decision Science Corp. The br
 | **agents.md** | [Agent integration guide](agents) |
 | **REST API** | [API reference](api) |
 | **OpenAPI** | [/api/v1/openapi.json](/api/v1/openapi.json) |
-| **PHP SDK** | [sdk/php](../../sdk/php/) in repo |
-| **Python SDK** | [sdk/python](../../sdk/python/) in repo |
-| **SMCP plugin** | [smcp_plugin/qr_studio](../../smcp_plugin/) |
+| **PHP SDK** | [Docs](sdk-php) · [GitHub `sdk/php`](https://github.com/decisionsciencecorp/qr.decisionsciencecorp.com/tree/main/sdk/php) |
+| **Python SDK** | [Docs](sdk-python) · [GitHub `sdk/python`](https://github.com/decisionsciencecorp/qr.decisionsciencecorp.com/tree/main/sdk/python) |
+| **SMCP plugin** | [Docs](smcp) · [GitHub `smcp_plugin`](https://github.com/decisionsciencecorp/qr.decisionsciencecorp.com/tree/main/smcp_plugin) |
 
 ## Licenses
 

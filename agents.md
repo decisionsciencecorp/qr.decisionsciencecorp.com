@@ -8,8 +8,8 @@ Canonical agent onboarding for [QR Code Studio](https://qr.decisionsciencecorp.c
 |----------|------|-------|
 | 1 | **This guide** | `agents.md` (repo root) · [live DEV docs](https://qr.decisionsciencecorp.com/dev/docs.php?path=agents) |
 | 2 | **REST API** | [API reference](https://qr.decisionsciencecorp.com/dev/docs.php?path=api) · [OpenAPI JSON](https://qr.decisionsciencecorp.com/api/v1/openapi.json) |
-| 3 | **SMCP plugin** | `smcp_plugin/qr_studio/cli.py --describe` |
-| 4 | **SDKs** | `sdk/php/` · `sdk/python/` |
+| 3 | **SMCP plugin** | [GitHub `smcp_plugin`](https://github.com/decisionsciencecorp/qr.decisionsciencecorp.com/tree/main/smcp_plugin) · `cli.py --describe` |
+| 4 | **SDKs** | [PHP](https://github.com/decisionsciencecorp/qr.decisionsciencecorp.com/tree/main/sdk/php) · [Python](https://github.com/decisionsciencecorp/qr.decisionsciencecorp.com/tree/main/sdk/python) |
 
 ## What agents should use
 
@@ -53,6 +53,8 @@ Public by default (~120 req/min per IP). Optional `QR_STUDIO_API_KEY` on server 
 ```bash
 python3 smcp_plugin/qr_studio/cli.py --describe
 ```
+
+Source: https://github.com/decisionsciencecorp/qr.decisionsciencecorp.com/tree/main/smcp_plugin
 
 ## Licensing
 
