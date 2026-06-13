@@ -1,9 +1,0 @@
-#!/bin/sh
-# Map any injected Cursor commit branding to Otto (workspace policy).
-MSG_FILE="$1"
-[ -f "$MSG_FILE" ] || exit 0
-sed -i 's/Co-authored-by: Cursor.*/Co-authored-by: Otto Vernal <otto.vernal@decisionsciencecorp.com>/' "$MSG_FILE" 2>/dev/null \
-  || sed -i '' 's/Co-authored-by: Cursor.*/Co-authored-by: Otto Vernal <otto.vernal@decisionsciencecorp.com>/' "$MSG_FILE" 2>/dev/null \
-  || true
-# If Cursor line was stripped by prepare-commit-msg, this is a no-op.
-exit 0
