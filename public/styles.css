@@ -173,6 +173,16 @@ code {
 
 .nav-link:hover::after { width: 100%; }
 
+.nav-link-dev {
+    color: #fbbf24 !important;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+}
+
+.nav-link-dev::after {
+    background: #fbbf24;
+}
+
 /* ─────────────────────────  Hero (compact)  ──────────────────────────────── */
 
 .hero {

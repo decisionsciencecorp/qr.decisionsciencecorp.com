@@ -1,0 +1,127 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "QR Code Studio API",
+    "version": "1.0.0",
+    "description": "REST API for validating QR payloads and generating PNG/SVG codes. Code is AGPL-3.0; this document is CC BY-SA 4.0.",
+    "license": { "name": "AGPL-3.0", "url": "https://www.gnu.org/licenses/agpl-3.0.html" },
+    "contact": { "name": "Decision Science Corp", "url": "https://decisionsciencecorp.com/" }
+  },
+  "servers": [{ "url": "https://qr.decisionsciencecorp.com" }],
+  "paths": {
+    "/api/v1/health.php": {
+      "get": {
+        "summary": "Service health and endpoint index",
+        "responses": {
+          "200": { "description": "OK", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/HealthResponse" } } } }
+        }
+      }
+    },
+    "/api/v1/normalize.php": {
+      "post": {
+        "summary": "Validate and normalize QR payload",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/NormalizeRequest" } }
+          }
+        },
+        "responses": {
+          "200": { "description": "Normalized payload", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/NormalizeResponse" } } } },
+          "422": { "description": "Validation error", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } } } }
+        }
+      }
+    },
+    "/api/v1/generate.php": {
+      "post": {
+        "summary": "Generate QR code image (PNG or SVG)",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/GenerateRequest" } }
+          }
+        },
+        "responses": {
+          "200": { "description": "Generated image as base64", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/GenerateResponse" } } } },
+          "422": { "description": "Validation error", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } } } }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKeyHeader": { "type": "apiKey", "in": "header", "name": "X-API-Key" },
+      "BearerAuth": { "type": "http", "scheme": "bearer" }
+    },
+    "schemas": {
+      "HealthResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean" },
+          "service": { "type": "string" },
+          "version": { "type": "string" },
+          "license": { "type": "object" },
+          "endpoints": { "type": "object" },
+          "documentation": { "type": "string" }
+        }
+      },
+      "NormalizeRequest": {
+        "type": "object",
+        "required": ["content"],
+        "properties": {
+          "content": { "type": "string", "description": "URL, email, phone, or plain text" },
+          "type": { "type": "string", "enum": ["auto", "url", "email", "tel", "text"], "default": "auto" }
+        }
+      },
+      "NormalizeResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean" },
+          "encoded": { "type": "string" },
+          "type": { "type": "string" },
+          "suggestion": { "type": "string", "nullable": true },
+          "suggestion_reason": { "type": "string", "nullable": true }
+        }
+      },
+      "GenerateRequest": {
+        "allOf": [
+          { "$ref": "#/components/schemas/NormalizeRequest" },
+          {
+            "type": "object",
+            "properties": {
+              "format": { "type": "string", "enum": ["png", "svg"], "default": "png" },
+              "ecl": { "type": "string", "enum": ["L", "M", "Q", "H"], "default": "M" },
+              "cell_size": { "type": "integer", "minimum": 2, "maximum": 20, "default": 8 },
+              "margin": { "type": "integer", "minimum": 0, "maximum": 10, "default": 4 },
+              "logo_base64": { "type": "string", "description": "Optional center logo (raw base64 or data URI, max 2MB decoded)" },
+              "logo_size_pct": { "type": "integer", "minimum": 10, "maximum": 30, "default": 22 }
+            }
+          }
+        ]
+      },
+      "GenerateResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean" },
+          "encoded": { "type": "string" },
+          "type": { "type": "string" },
+          "format": { "type": "string" },
+          "mime_type": { "type": "string" },
+          "data_base64": { "type": "string" },
+          "width": { "type": "integer" },
+          "height": { "type": "integer" },
+          "ecl_requested": { "type": "string" },
+          "ecl_effective": { "type": "string" }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "example": false },
+          "error": { "type": "string" },
+          "error_code": { "type": "string" }
+        }
+      }
+    }
+  }
+}

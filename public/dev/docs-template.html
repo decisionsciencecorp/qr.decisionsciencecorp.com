@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{DOCS_TITLE}} — DEV · QR Code Studio</title>
+    <meta name="description" content="{{DOCS_DESCRIPTION}}">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://qr.decisionsciencecorp.com/dev/docs.php?path={{DOCS_PATH}}">
+    <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+    <link rel="stylesheet" href="../fonts/inter.css">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="dev.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+</head>
+<body class="dev-body">
+    <nav class="navbar dev-navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-logo">
+                <img src="../assets/images/logo-white.svg" alt="" class="nav-logo-img" aria-hidden="true">
+                <span class="nav-logo-text">QR Code Studio</span>
+            </a>
+            <span class="dev-pill">DEV</span>
+            <ul class="nav-menu">
+                <li><a href="../index.html" class="nav-link">Studio</a></li>
+                <li><a href="index.php" class="nav-link">DEV home</a></li>
+                <li><a href="docs.php?path=agents" class="nav-link nav-link--highlight">agents.md</a></li>
+                <li><a href="docs.php?path=api" class="nav-link">API</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container dev-docs-layout">
+        <aside class="dev-sidebar">
+            <nav class="dev-sidebar__nav" aria-label="Documentation">
+                <p class="dev-sidebar__label">Documentation</p>
+                <ul>
+                    <li><a href="docs.php?path=agents">agents.md</a></li>
+                    <li><a href="docs.php?path=api">API reference</a></li>
+                    <li><a href="docs.php?path=sdk-php">PHP SDK</a></li>
+                    <li><a href="docs.php?path=sdk-python">Python SDK</a></li>
+                    <li><a href="docs.php?path=smcp">SMCP plugin</a></li>
+                    <li><a href="docs.php?path=licensing">Licensing</a></li>
+                    <li><a href="docs.php?path=index">Overview</a></li>
+                </ul>
+                <p class="dev-sidebar__label">Machine-readable</p>
+                <ul>
+                    <li><a href="/api/v1/openapi.json">openapi.json</a></li>
+                    <li><a href="/api/v1/health.php">health.php</a></li>
+                </ul>
+            </nav>
+            {{DOCS_TOC}}
+        </aside>
+
+        <main class="dev-docs-main">
+            <nav class="dev-breadcrumb" aria-label="Breadcrumb">
+                <ol>
+                    <li class="dev-crumb"><a href="index.php">DEV</a></li>
+                    {{DOCS_BREADCRUMB}}
+                </ol>
+            </nav>
+            {{DOCS_CONTENT}}
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="container footer-inner">
+            <p>© Decision Science Corp · <a href="docs.php?path=licensing">Licensing</a></p>
+        </div>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+</body>
+</html>
