@@ -40,9 +40,6 @@ $agentsRepoUrl = 'https://github.com/decisionsciencecorp/qr.decisionsciencecorp.
             <span class="dev-pill" aria-label="Developer section">DEV</span>
             <ul class="nav-menu" id="nav-menu">
                 <li><a href="../index.html" class="nav-link">Studio</a></li>
-                <li><a href="index.php" class="nav-link is-active">DEV</a></li>
-                <li><a href="docs.php?path=agents" class="nav-link nav-link--highlight">agents.md</a></li>
-                <li><a href="docs.php?path=api" class="nav-link">API</a></li>
             </ul>
         </div>
     </nav>
@@ -98,8 +95,24 @@ $agentsRepoUrl = 'https://github.com/decisionsciencecorp/qr.decisionsciencecorp.
     </main>
 
     <footer class="footer">
-        <div class="container footer-inner">
-            <p>© <span id="year"></span> Decision Science Corp · <a href="docs.php?path=licensing">Licensing</a></p>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="../index.html" class="footer-brand-link">
+                        <img src="../assets/images/logo-white.svg" alt="" class="footer-logo-img" aria-hidden="true">
+                        <span class="footer-brand-text">QR Code Studio</span>
+                    </a>
+                </div>
+                <ul class="footer-list footer-list--inline">
+                    <li><a class="footer-link footer-link--dev" href="index.php">DEV</a></li>
+                    <li><a class="footer-link" href="docs.php?path=agents">agents.md</a></li>
+                    <li><a class="footer-link" href="docs.php?path=api">API</a></li>
+                    <li><a class="footer-link" href="docs.php?path=licensing">Licensing</a></li>
+                </ul>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">&copy; <span id="year"></span> Decision Science Corp</p>
+            </div>
         </div>
     </footer>
     <script>document.getElementById('year').textContent = new Date().getFullYear();</script>

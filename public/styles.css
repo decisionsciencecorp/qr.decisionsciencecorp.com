@@ -820,6 +820,14 @@ code {
 
 .footer-link:hover { color: var(--text-primary); }
 
+.footer-link--dev {
+    color: #fbbf24;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+}
+
+.footer-link--dev:hover { color: #fcd34d; }
+
 .footer-bottom {
     padding-top: 1.5rem;
     border-top: 1px solid var(--border-color);
