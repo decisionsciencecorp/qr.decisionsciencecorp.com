@@ -61,13 +61,25 @@
     var $cellSize       = document.getElementById('cell-size');
     var $margin         = document.getElementById('margin');
     var $year           = document.getElementById('year');
+    var $logoFile       = document.getElementById('logo-file');
+    var $logoPreview    = document.getElementById('logo-preview');
+    var $logoPreviewImg = document.getElementById('logo-preview-img');
+    var $logoRemove     = document.getElementById('logo-remove');
+    var $logoUploadText = document.getElementById('logo-upload-text');
+    var $logoSize       = document.getElementById('logo-size');
+    var $logoSizeField  = document.getElementById('logo-size-field');
+    var $logoSizeValue  = document.getElementById('logo-size-value');
+
+    var ECL_RANK = { L: 0, M: 1, Q: 2, H: 3 };
+    var LOGO_MAX_BYTES = 2 * 1024 * 1024;
 
     /* ───────────────────────────  State  ─────────────────────────────── */
 
     var state = {
         type: 'auto',           // auto | url | email | tel | text
         currentSuggestion: null, // string | null
-        lastValidPayload: null   // { encoded, type } | null
+        lastValidPayload: null,  // render snapshot for downloads
+        logo: null               // { image, dataUrl, name, sizePct } | null
     };
 
     /* ───────────────────────────  Helpers  ───────────────────────────── */
@@ -305,7 +317,7 @@
         return qr;
     }
 
-    function renderToCanvas(qr, cellSize, margin) {
+    function renderToCanvas(qr, cellSize, margin, logo, logoSizePct) {
         var moduleCount = qr.getModuleCount();
         var size = (moduleCount + margin * 2) * cellSize;
         $canvas.width = size;
@@ -328,9 +340,43 @@
                 }
             }
         }
+        if (logo && logo.image) {
+            drawCenterLogo(ctx, size, logo.image, logoSizePct);
+        }
     }
 
-    function buildSvgString(qr, cellSize, margin) {
+    function roundRectPath(ctx, x, y, w, h, r) {
+        r = Math.min(r, w / 2, h / 2);
+        ctx.beginPath();
+        ctx.moveTo(x + r, y);
+        ctx.arcTo(x + w, y, x + w, y + h, r);
+        ctx.arcTo(x + w, y + h, x, y + h, r);
+        ctx.arcTo(x, y + h, x, y, r);
+        ctx.arcTo(x, y, x + w, y, r);
+        ctx.closePath();
+    }
+
+    /** White pad + centered logo — sized as a fraction of the full canvas. */
+    function drawCenterLogo(ctx, canvasSize, image, sizePct) {
+        var pct = Math.max(10, Math.min(30, sizePct || 22)) / 100;
+        var logoSide = canvasSize * pct;
+        var padSide = logoSide * 1.14;
+        var cx = canvasSize / 2;
+        var cy = canvasSize / 2;
+        var padX = cx - padSide / 2;
+        var padY = cy - padSide / 2;
+        var radius = Math.max(4, padSide * 0.12);
+
+        ctx.fillStyle = '#ffffff';
+        roundRectPath(ctx, padX, padY, padSide, padSide, radius);
+        ctx.fill();
+
+        var imgX = cx - logoSide / 2;
+        var imgY = cy - logoSide / 2;
+        ctx.drawImage(image, imgX, imgY, logoSide, logoSide);
+    }
+
+    function buildSvgString(qr, cellSize, margin, logo, logoSizePct) {
         var moduleCount = qr.getModuleCount();
         var size = (moduleCount + margin * 2) * cellSize;
         var rects = [];
@@ -346,6 +392,25 @@
                 }
             }
         }
+
+        var logoMarkup = '';
+        if (logo && logo.dataUrl) {
+            var pct = Math.max(10, Math.min(30, logoSizePct || 22)) / 100;
+            var logoSide = size * pct;
+            var padSide = logoSide * 1.14;
+            var padX = (size - padSide) / 2;
+            var padY = (size - padSide) / 2;
+            var imgX = (size - logoSide) / 2;
+            var imgY = (size - logoSide) / 2;
+            var radius = Math.max(4, padSide * 0.12);
+            logoMarkup =
+                '<rect x="' + padX + '" y="' + padY + '" width="' + padSide +
+                '" height="' + padSide + '" rx="' + radius + '" fill="#ffffff"/>' +
+                '<image href="' + escapeAttr(logo.dataUrl) + '" x="' + imgX +
+                '" y="' + imgY + '" width="' + logoSide + '" height="' + logoSide +
+                '" preserveAspectRatio="xMidYMid meet"/>';
+        }
+
         return [
             '<?xml version="1.0" encoding="UTF-8"?>',
             '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + size + ' ' + size + '" width="' + size + '" height="' + size + '" shape-rendering="crispEdges">',
@@ -353,8 +418,85 @@
             '<g fill="#0a0a0a">',
             rects.join(''),
             '</g>',
+            logoMarkup,
             '</svg>'
         ].join('');
+    }
+
+    function escapeAttr(s) {
+        return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+    }
+
+    function effectiveEcl(selected, hasLogo) {
+        if (!hasLogo) return selected || 'M';
+        // Logos obscure modules — never go below Q when a center image is present.
+        return (ECL_RANK[selected] || 0) < ECL_RANK.Q ? 'Q' : selected;
+    }
+
+    function logoSizePct() {
+        return Math.max(10, Math.min(30, parseInt($logoSize.value, 10) || 22));
+    }
+
+    function syncLogoUi() {
+        var hasLogo = !!(state.logo && state.logo.image);
+        $logoPreview.hidden = !hasLogo;
+        $logoSizeField.hidden = !hasLogo;
+        if (hasLogo) {
+            $logoPreviewImg.src = state.logo.dataUrl;
+            $logoUploadText.textContent = 'Replace image';
+        } else {
+            $logoPreviewImg.removeAttribute('src');
+            $logoUploadText.textContent = 'Upload image';
+            $logoFile.value = '';
+        }
+        $logoSizeValue.textContent = logoSizePct() + '%';
+    }
+
+    function clearLogo() {
+        state.logo = null;
+        syncLogoUi();
+        update();
+    }
+
+    function loadLogoFile(file) {
+        if (!file) return;
+        if (!/^image\/(png|jpeg|gif|webp|svg\+xml)$/i.test(file.type)) {
+            showError('Logo must be PNG, JPEG, GIF, WebP, or SVG.');
+            return;
+        }
+        if (file.size > LOGO_MAX_BYTES) {
+            showError('Logo is too large — keep it under 2 MB.');
+            return;
+        }
+
+        var reader = new FileReader();
+        reader.onload = function () {
+            var dataUrl = reader.result;
+            var img = new Image();
+            img.onload = function () {
+                state.logo = {
+                    image: img,
+                    dataUrl: dataUrl,
+                    name: file.name,
+                    sizePct: logoSizePct()
+                };
+                syncLogoUi();
+                // Bump error correction so branded codes stay scannable.
+                if ((ECL_RANK[$ecl.value] || 0) < ECL_RANK.Q) {
+                    $ecl.value = 'Q';
+                }
+                clearError();
+                update();
+            };
+            img.onerror = function () {
+                showError('Could not load that image — try a different file.');
+            };
+            img.src = dataUrl;
+        };
+        reader.onerror = function () {
+            showError('Could not read that file.');
+        };
+        reader.readAsDataURL(file);
     }
 
     /* ─────────────────────────  Wiring  ──────────────────────────────── */
@@ -445,13 +587,15 @@
         $encoded.textContent = result.encoded;
 
         // Render QR.
-        var ecl = $ecl.value || 'M';
+        var hasLogo = !!(state.logo && state.logo.image);
+        var ecl = effectiveEcl($ecl.value || 'M', hasLogo);
         var cellSize = Math.max(2, Math.min(20, parseInt($cellSize.value, 10) || 8));
         var margin = Math.max(0, Math.min(16, parseInt($margin.value, 10) || 4));
+        var logoPct = logoSizePct();
 
         try {
             var qr = buildQr(result.encoded, ecl);
-            renderToCanvas(qr, cellSize, margin);
+            renderToCanvas(qr, cellSize, margin, state.logo, logoPct);
             setStatus('ready');
             setDownloadEnabled(true);
             state.lastValidPayload = {
@@ -459,11 +603,16 @@
                 type: result.type,
                 qr: qr,
                 cellSize: cellSize,
-                margin: margin
+                margin: margin,
+                logo: state.logo,
+                logoSizePct: logoPct,
+                ecl: ecl
             };
-            $previewMeta.textContent = humanType(result.type) +
+            var meta = humanType(result.type) +
                 ' · ' + qr.getModuleCount() + '×' + qr.getModuleCount() +
                 ' · ECL ' + ecl;
+            if (hasLogo) meta += ' · logo ' + logoPct + '%';
+            $previewMeta.textContent = meta;
         } catch (e) {
             showError('Couldn\'t encode that — payload may be too long for a single QR code.');
             setStatus('error');
@@ -489,6 +638,17 @@
     $ecl.addEventListener('change', update);
     $cellSize.addEventListener('input', debouncedUpdate);
     $margin.addEventListener('input', debouncedUpdate);
+    $logoFile.addEventListener('change', function () {
+        loadLogoFile($logoFile.files && $logoFile.files[0]);
+    });
+    $logoRemove.addEventListener('click', clearLogo);
+    $logoSize.addEventListener('input', function () {
+        $logoSizeValue.textContent = logoSizePct() + '%';
+        if (state.logo) {
+            state.logo.sizePct = logoSizePct();
+            debouncedUpdate();
+        }
+    });
 
     Array.prototype.forEach.call(document.querySelectorAll('.type-pill'), function (pill) {
         pill.addEventListener('click', function () {
@@ -531,7 +691,7 @@
     $downloadSvg.addEventListener('click', function () {
         if (!state.lastValidPayload) return;
         var p = state.lastValidPayload;
-        var svg = buildSvgString(p.qr, p.cellSize, p.margin);
+        var svg = buildSvgString(p.qr, p.cellSize, p.margin, p.logo, p.logoSizePct);
         var blob = new Blob([svg], { type: 'image/svg+xml' });
         var url = URL.createObjectURL(blob);
         var link = document.createElement('a');
@@ -559,5 +719,6 @@
     /* ─────────────────────────  Init  ────────────────────────────────── */
 
     $year.textContent = new Date().getFullYear();
+    syncLogoUi();
     update();
 })();

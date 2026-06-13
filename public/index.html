@@ -92,6 +92,32 @@
                     <span id="error-text"></span>
                 </div>
 
+                <div class="logo-panel" id="logo-panel">
+                    <div class="logo-panel__header">
+                        <label class="form-label" for="logo-file">Center logo <span class="form-label-hint">(optional)</span></label>
+                        <p class="logo-panel__hint">Place a brand mark in the middle — great for stickers and business cards. Uses higher error correction so scanners still read through it.</p>
+                    </div>
+                    <div class="logo-panel__controls">
+                        <label class="logo-upload" id="logo-upload-label">
+                            <input type="file" id="logo-file" accept="image/png,image/jpeg,image/gif,image/webp,image/svg+xml" hidden>
+                            <span class="logo-upload__icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                                    <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                                </svg>
+                            </span>
+                            <span class="logo-upload__text" id="logo-upload-text">Upload image</span>
+                        </label>
+                        <div class="logo-preview" id="logo-preview" hidden>
+                            <img id="logo-preview-img" alt="" class="logo-preview__img">
+                            <button type="button" class="btn btn-small btn-secondary" id="logo-remove">Remove</button>
+                        </div>
+                    </div>
+                    <label class="advanced-field logo-size-field" id="logo-size-field" hidden>
+                        <span class="advanced-field__label">Logo size <span id="logo-size-value">22%</span></span>
+                        <input id="logo-size" class="form-input logo-size-slider" type="range" min="10" max="30" step="1" value="22">
+                    </label>
+                </div>
+
                 <details class="advanced">
                     <summary>Advanced</summary>
                     <div class="advanced-grid">
@@ -177,7 +203,8 @@
                 <h3 class="info-card__title">Print-ready outputs</h3>
                 <p class="info-card__body">
                     Download as PNG for slides and stickers, or SVG for crisp scaling at
-                    any size — billboard or business card.
+                    any size — billboard or business card. Drop a logo in the center when
+                    you want branded codes that still scan.
                 </p>
             </div>
         </div>

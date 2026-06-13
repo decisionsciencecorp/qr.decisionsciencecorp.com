@@ -125,6 +125,28 @@ def main() -> int:
                "banner hides after accept")
         shoot(page, "desktop-after-accept.png")
 
+        # Center logo upload
+        print("\n— Center logo upload")
+        logo_path = pathlib.Path(__file__).parent.parent / "public" / "assets" / "images" / "logo-white.svg"
+        page.set_input_files("#logo-file", str(logo_path))
+        time.sleep(0.5)
+        expect(page.is_visible("#logo-preview"), "logo preview visible")
+        expect(page.input_value("#ecl") in ("Q", "H"), "ECL bumped to Q or H with logo")
+        meta = page.inner_text("#preview-meta")
+        expect("logo" in meta.lower(), "preview meta mentions logo")
+        pixels = page.evaluate("""() => {
+            const c = document.getElementById('qr-canvas');
+            const ctx = c.getContext('2d', { willReadFrequently: true });
+            const cx = Math.floor(c.width / 2);
+            const cy = Math.floor(c.height / 2);
+            const p = ctx.getImageData(cx, cy, 1, 1).data;
+            return Array.from(p);
+        }""")
+        # Center should be non-pure-black (white pad or logo pixels)
+        expect(not (pixels[0] < 20 and pixels[1] < 20 and pixels[2] < 20),
+               f"center pixel not empty black ({pixels})")
+        shoot(page, "desktop-with-logo.png")
+
         ctx.close()
 
         # Mobile

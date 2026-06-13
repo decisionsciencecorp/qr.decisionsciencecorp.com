@@ -448,6 +448,87 @@ code {
     margin-bottom: 1.25rem;
 }
 
+/* Center logo panel */
+.logo-panel {
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.logo-panel__hint {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-top: 0.35rem;
+    margin-bottom: 0.85rem;
+}
+
+.form-label-hint {
+    font-weight: 400;
+    color: var(--text-muted);
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.logo-panel__controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.logo-upload {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.65rem 1rem;
+    border: 1px dashed var(--border-color);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.logo-upload:hover {
+    border-color: rgba(59, 130, 246, 0.45);
+    background: rgba(59, 130, 246, 0.08);
+    color: var(--text-primary);
+}
+
+.logo-upload__icon {
+    display: flex;
+    color: var(--accent);
+}
+
+.logo-preview {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+.logo-preview__img {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 4px;
+}
+
+.logo-size-field {
+    margin-top: 0.85rem;
+}
+
+.logo-size-slider {
+    padding: 0;
+    height: auto;
+    accent-color: var(--accent);
+}
+
 /* Advanced disclosure */
 .advanced {
     margin-top: 0.75rem;
